@@ -13,7 +13,7 @@ module.exports = {
     },
 
     stars: function S() {
-        event.N = "Star allign"
+        event.N = "Star align"
         event.C = eventStatus.SC;
         event.icon = eventStatus.SE1;
         event.E2 = eventStatus.SE2;
@@ -48,8 +48,8 @@ module.exports = {
         fs.writeFile("./events.json", JSON.stringify(event), (err) => console.error);
     },
 
-    eclypse: function E() {
-        event.N = "Eclypse"
+    eclipse: function E() {
+        event.N = "Eclipse"
         event.C = eventStatus.EC;
         event.icon = eventStatus.EE1;
         event.E2 = eventStatus.EE2;
