@@ -5,14 +5,14 @@ const config = require('../config/config.json')
 
 module.exports = {
     alter: function alter(author) {
-        let emb = new discord.RichEmbed()
+        let emb = new discord.MessageEmbed()
             .setColor(weather.C)
             .setTitle(author + ' has used weather magic!')
             .setDescription('*It is now ' + weatherData.weather.toLowerCase() + '*')
         return emb
     },
     help: function halp() {
-        let emb = new discord.RichEmbed()
+        let emb = new discord.MessageEmbed()
             .setColor("#7CFC00")
             .setTitle("Weather Altering Spell")
             .setDescription("Choose an option to change weather:")

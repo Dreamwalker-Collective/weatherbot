@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const config = require('../config/config.json')
 module.exports = {
     help: function help() {
-            let emb = new discord.RichEmbed()
+            let emb = new discord.MessageEmbed()
                 .setAuthor("WeatherBot", icon_url = "https://i.imgur.com/38ayDN2.jpg")
                 .setColor("#956a6a")
                 .setTitle("List of all commands")

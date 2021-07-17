@@ -3,7 +3,7 @@ const event = require('../events.json')
 
 module.exports = {
     event: function evnt(){
-        let emb = new discord.RichEmbed()
+        let emb = new discord.MessageEmbed()
             .setAuthor("Event", icon_url = `${event.icon}`)
             .setColor(event.C)
             .setDescription("What was the last event?")

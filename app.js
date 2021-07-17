@@ -41,7 +41,7 @@ bot.on('ready', () => {
 
 //find channels, start embed
 bot.on('ready', () => {
-  forecast = bot.channels.find(x => x.name === mainchannel);
+  forecast = bot.channels.cache.find(x => x.name === mainchannel);
   if (!forecast) {
     console.log(`[ERR] No ${mainchannel} detected! ${bot.user.username} will now shutdown`);
     bot.destroy(bot)
@@ -55,7 +55,7 @@ bot.on('message', message => {
   if(message.author.bot || message.channel.type === 'dm') return;
 
   if(message.content.toLowerCase() === `${config.prefix}start`) {
-    if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(errorembed);
+    if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(eeror);
     else {
       weatherUp();
       eventUp();

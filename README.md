@@ -17,7 +17,7 @@
 3. [x] Falling stars
 4. [x] Tornadoes
 5. [x] Avalanches
-6. [x] Star allignments
+6. [x] Star alignments
 
 
 ### Weather list
@@ -46,3 +46,6 @@ Step 5. if you do not want events run **+togglevents off_**. **Remember you can 
 If you want to install this bot and use it on your own download all the files to your server.
 in the `config` folder create a file called `config.json`.
 Then edit it's contents
+
+
+https://discord.com/oauth2/authorize?client_id=865744759338565634&scope=bot+applications.commands
