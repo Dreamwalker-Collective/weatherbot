@@ -3,6 +3,7 @@ const wtthr = require("../weather.json");
 
 module.exports = {
     weather: function () {
+        console.log(wtthr.icon);
         let emb = new discord.MessageEmbed()
             .setAuthor("Weather", icon_url = `${wtthr.icon}`)
             .setColor(wtthr.C)

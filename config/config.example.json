@@ -1,5 +1,6 @@
 {
     "token": "",
     "channel": "weather-forecast",
-    "prefix": "/"
+    "prefix": "/",
+    "lunarCycle": 28
 }

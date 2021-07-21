@@ -1,31 +1,41 @@
 {
-    "AC": "#fff",
-    "AE1": "https://i.imgur.com/CgDePud.png",
-    "AE2": ":warning:",
-    "AD": "  Avalanche alert!",
+    "avalanche": {
+        "name": "Avalanche",
+        "color": "#fff",
+        "image": "https://i.imgur.com/CgDePud.png",
+        "emoji": ":warning:",
+        "comment": "  Avalanche alert!"
+    },
 
-    "SC": "#8f1dd1",
-    "SE1": "https://i.imgur.com/DiEf8Vm.png",
-    "SE2": ":sparkles:",
-    "SD": "  The stars are aligned!",
+    "tornado": {
+        "name": "Tornado",
+        "color": "#85858c",
+        "image": "https://i.imgur.com/xfSUtDc.png",
+        "emoji": ":warning:",
+        "comment": "  Tornado alert!"
+    },
 
-    "TC": "#85858c",
-    "TE1": "https://i.imgur.com/xfSUtDc.png",
-    "TE2": ":warning:",
-    "TD": "  Tornado alert!",
+    "fullMoon": {
+        "name": "Full Moon",
+        "color": "#fcfcf2",
+        "image": "https://i.imgur.com/YrsfRiQ.png",
+        "emoji": ":night_with_stars:",
+        "comment": "  *Tonight is going to be a full moon!*"
+    },
 
-    "FMC": "#fcfcf2",
-    "FME1": "https://i.imgur.com/YrsfRiQ.png",
-    "FME2": ":night_with_stars:",
-    "FMD": "  *Tonight is going to be a full moon!*",
+    "meteorShower": {
+        "name": "Meteor Shower",
+        "color": "#4c22bf",
+        "image": "https://i.imgur.com/VNcYlNK.png",
+        "emoji": ":milky_way:",
+        "comment": "  Stars are falling!"
+    },
 
-    "FSC": "#4c22bf",
-    "FSE1": "https://i.imgur.com/VNcYlNK.png",
-    "FSE2": ":milky_way:",
-    "FSD": "  Stars are falling!",
-
-    "EC": "#fc7202",
-    "EE1": "https://i.imgur.com/4PR5Pg7.png",
-    "EE2": ":city_dusk:",
-    "ED": "  A solar eclipse is happening!"
+    "solarEclipse": {
+        "name": "Solar Eclipse",
+        "color": "#fc7202",
+        "image": "https://i.imgur.com/4PR5Pg7.png",
+        "emoji": ":city_dusk:",
+        "comment": "  A solar eclipse is happening!"
+    }
 }

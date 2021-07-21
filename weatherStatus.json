@@ -1,31 +1,49 @@
 {
-    "RC": "#40a4df",
-    "RE1": ":cloud_rain:",
-    "RE2": "https://i.imgur.com/ygwdKOd.png",
-    "RD": "It will rain today!",
+"rainy": {
+    "name": "Rainy",
+    "color": "#40a4df",
+    "emoji": ":cloud_rain:",
+    "image": "https://i.imgur.com/ygwdKOd.png",
+    "comment": "It will rain today!"
+},
 
-    "SNC": "#fffafa",
-    "SNE1": ":cloud_snow:",
-    "SNE2": "https://i.imgur.com/X6ywbAG.png",
-    "SND": "*Snowball fight!*",
+"snowy": {
+    "name": "Snowy",
+    "color": "#fffafa",
+    "emoji": ":cloud_snow:",
+    "image": "https://i.imgur.com/X6ywbAG.png",
+    "comment": "*Snowball fight!*"
+},
 
-    "TC": "#A99923",
-    "TE1": ":thunder_cloud_rain:",
-    "TE2": "https://i.imgur.com/YszPLNG.png",
-    "TD": "There's no storm without a thunder",
+"stormy": {
+    "name": "Stormy",
+    "color": "#A99923",
+    "emoji": ":thunder_cloud_rain:",
+    "image": "https://i.imgur.com/YszPLNG.png",
+    "comment": "There's no storm without a little thunder"
+},
 
-    "WC": "#a2a4a5",
-    "WE1": ":leaves:",
-    "WE2": "https://i.imgur.com/r2lj8SP.png",
-    "WD": "It's going to be windy",
+"windy": {
+    "name": "Windy",
+    "color": "#a2a4a5",
+    "emoji": ":leaves:",
+    "image": "https://i.imgur.com/r2lj8SP.png",
+    "comment": "It's going to be windy"
+},
 
-    "CC": "#aaafc4",
-    "CE1": ":cloud:",
-    "CE2": "https://i.imgur.com/xMa3sce.png",
-    "CD": "The gods are smoking",
+"cloudy": {
+    "name": "Cloudy",
+    "color": "#aaafc4",
+    "emoji": ":cloud:",
+    "image": "https://i.imgur.com/xMa3sce.png",
+    "comment": "The gods are smoking"
+},
 
-    "SC": "#f7ca02",
-    "SE1": ":partly_sunny: ",
-    "SE2": "https://i.imgur.com/vd2ZG3g.png",
-    "SD": "Praise the sun!"
+"sunny": {
+    "name": "Sunny",
+    "color": "#f7ca02",
+    "emoji": ":partly_sunny: ",
+    "image": "https://i.imgur.com/vd2ZG3g.png",
+    "comment": "Praise the sun!"
+}
 }
