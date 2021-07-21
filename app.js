@@ -36,7 +36,7 @@ bot.login(config.token);
 //log on start
 bot.on('ready', () => {
   console.log(`${bot.user.username} is ready!`);
-  bot.user.setActivity('the human realm', {type: "WATCHING"});
+  bot.user.setActivity('The Material Plane', {type: "WATCHING"});
 });
 
 //find channels, start embed
