@@ -7,12 +7,6 @@ const config = require("./config/config.json");
 //weather/ event stuff
 const weatherupdater = require("./weatherupdater.js");
 const eventUpdater = require("./eventUpdater.js");
-const weatherData = require("./weatherData.json");
-const weather = require("./weather.json");
-const event = require("./events.json");
-
-//other usefull stuff
-const fs = require("fs");
 
 //embeds
 const ehelp = require("./embeds/help");
@@ -20,9 +14,10 @@ const ewthr = require("./embeds/weather");
 const eevnt = require("./embeds/event");
 const estrt = require("./embeds/start");
 const eeror = require("./embeds/error");
-const esucc = require("./embeds/success");
 const ealtr = require("./embeds/alter");
-const etogg = require("./embeds/togglevents");
+
+// commands
+const commands = require("./commands");
 
 //variables
 var forecast;
@@ -34,153 +29,78 @@ bot.login(config.token);
 
 //log on start
 bot.on("ready", () => {
-  console.log(`${bot.user.username} is ready!`);
-  bot.user.setActivity("The Material Plane", { type: "WATCHING" });
-});
+    console.log(`${bot.user.username} is ready!`);
+    bot.user.setActivity("the skies", { type: "WATCHING" });
 
-//find channels, start embed
-bot.on("ready", () => {
-  forecast = bot.channels.cache.find((x) => x.name === mainchannel);
-  if (!forecast) {
-    console.log(
-      `[ERR] No ${mainchannel} detected! ${bot.user.username} will now shutdown`
-    );
-    bot.destroy(bot);
-  } else {
-    return forecast.send(estrt.start());
-  }
+    //find channels, start embed
+    forecast = bot.channels.cache.find((x) => x.name === mainchannel);
+    if (!forecast) {
+        console.log(
+            `[ERR] No ${mainchannel} detected! ${bot.user.username} will now shutdown`
+        );
+        bot.destroy(bot);
+    } else {
+        return forecast.send(estrt.start());
+    }
 });
 
 //in case shit goes wrong
 bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
+    if (message.author.bot || message.channel.type === "dm") return;
 
-  if (message.content.toLowerCase() === `${config.prefix}start`) {
-    if (!message.member.hasPermission("ADMINISTRATOR"))
-      return message.channel.send(eeror);
-    else {
-      weatherUp();
-      eventUp();
-      message.delete();
+    if (message.content.toLowerCase() === `${config.prefix}start`) {
+        if (!message.member.hasPermission("ADMINISTRATOR"))
+            return message.channel.send(eeror);
+        else {
+            weatherUp();
+            eventUp();
+            message.delete();
+        }
     }
-  }
 });
 
 //help command
 bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
+    if (message.author.bot || message.channel.type === "dm") return;
 
-  if (message.content.toLowerCase() === config.prefix + "help") {
-    return message.channel.send(ehelp.help());
-  }
-});
-
-//set the prefix
-bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
-
-  if (message.content.startsWith(config.prefix + "setpref")) {
-    if (!message.member.hasPermission("ADMINISTRATOR")) {
-      return message.channel.send(eeror.error());
-    } else {
-      let newPrefix = message.content.split(" ").slice(1, 2)[0];
-      config.prefix = newPrefix;
-      fs.writeFile(
-        "./config/config.json",
-        JSON.stringify(config),
-        (err) => console.error
-      );
-      message.guild
-        .member(bot.user)
-        .setNickname(`[${config.prefix}]${bot.user.username}`);
-      return message.channel.send(esucc.success());
+    if (message.content.toLowerCase() === config.prefix + "help") {
+        return message.channel.send(ehelp.help());
     }
-  }
-});
 
-// togglevents
-bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
-
-  if (message.content.startsWith(`${config.prefix}togglevents`)) {
-    if (message.member.hasPermission("ADMINISTRATOR")) {
-      let arg = message.content.split(" ").slice(1, 2)[0];
-      if (arg === "on") {
-        config.events = "on";
-        fs.writeFile(
-          "./config/config.json",
-          JSON.stringify(config),
-          (err) => console.error
-        );
-        message.channel.send(etogg.on());
-      } else if (arg === "off") {
-        config.events = "off";
-        fs.writeFile(
-          "./config/config.json",
-          JSON.stringify(config),
-          (err) => console.error
-        );
-        message.channel.send(etogg.off());
-      } else {
-        message.channel.send(etogg.help());
-      }
-    } else {
-      return message.channel.send("`yah yeet no can do`");
+    //set the prefix
+    else if (message.content.startsWith(config.prefix + "setpref")) {
+        if (!message.member.hasPermission("ADMINISTRATOR")) {
+            return message.channel.send(eeror.error());
+        } else {
+            return commands.setPrefix(message);
+        }
     }
-  }
-});
 
-//actual weather stuff
-
-//what's the weather
-bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
-
-  if (message.content.toLowerCase() === config.prefix + "weather") {
-    return message.channel.send(ewthr.weather());
-  }
-});
-
-//whats the event
-bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
-
-  if (message.content.toLowerCase() === config.prefix + "event") {
-    return message.channel.send(eevnt.event());
-  }
-});
-
-// WeatherAlter magic
-bot.on("message", (message) => {
-  if (message.author.bot || message.channel.type === "dm") return;
-
-  if (message.content.startsWith(config.prefix + "weatheralter")) {
-    if (message.member.roles.find((x) => x.name === "Weather Mage")) {
-      let wArg = message.content.split(" ").slice(1, 2)[0];
-      if (wArg && wArg in weatherupdater.weatherOptions()) {
-        weatherupdater.setWeather(wArg);
-        weatherData.weather = weather.N;
-        fs.writeFile(
-          "./weatherData.json",
-          JSON.stringify(weatherData),
-          (err) => console.error
-        );
-        forecast.send(ewthr.weather());
-        const author = message.author.username;
-        message.channel.send(ealtr.alter(author));
-      } else if (wArg === undefined) {
-        message.channel.send(ealtr.help());
-      } else {
-        message.channel.send(
-          "`Invalid weather condition. Type " +
-            config.prefix +
-            "weatheralter for more info.`"
-        );
-      }
-    } else {
-      message.channel.send("`Yah Yeet No can do`");
+    // togglevents
+    else if (message.content.startsWith(`${config.prefix}toggle`)) {
+        if (message.member.hasPermission("ADMINISTRATOR")) {
+            return commands.toggleEvents(message);
+        } else {
+            return message.channel.send("`yah yeet no can do`");
+        }
     }
-  }
+
+    //actual weather stuff
+
+    //what's the weather
+    else if (message.content.toLowerCase() === config.prefix + "weather") {
+        return message.channel.send(ewthr.weather());
+    }
+
+    //whats the event
+    else if (message.content.toLowerCase() === config.prefix + "event") {
+        return message.channel.send(eevnt.event());
+    }
+
+    // WeatherAlter magic
+    else if (message.content.startsWith(config.prefix + "weatheralter")) {
+        return commands.alterWeather(message);
+    }
 });
 
 //timeline
@@ -190,50 +110,51 @@ var weatherTimer;
 var eventTimer;
 
 const weathers = [
-  "cloudy",
-  "cloudy",
-  "cloudy",
-  "sunny",
-  "sunny",
-  "sunny",
-  "windy",
-  "windy",
-  "rainy",
-  "rainy",
-  "stormy",
-  "stormy",
+    "cloudy",
+    "cloudy",
+    "cloudy",
+    "sunny",
+    "sunny",
+    "sunny",
+    "windy",
+    "windy",
+    "rainy",
+    "rainy",
+    "stormy",
+    "stormy",
 ];
 const events = [
-  "tornado",
-  "fullMoon",
-  "avalanche",
-  "solarEclipse",
-  "meteorShower",
+    "tornado",
+    "fullMoon",
+    "avalanche",
+    "solarEclipse",
+    "meteorShower",
 ];
 
 weatherTimer = moment().add(30, "minutes");
 eventTimer = moment().add(4, "days");
 
 setInterval(() => {
-  var tmer = moment();
-  if (weatherTimer.diff(tmer, "minutes") <= 1) {
-    weatherTimer = moment().add(30, "minutes");
-    weatherUp();
-  }
-  if (eventTimer.diff(tmer, "minutes") <= 1 && config.events === "on") {
-    eventTimer = moment().add(4, "days");
-    eventUp();
-  }
+    var tmer = moment();
+    if (weatherTimer.diff(tmer, "minutes") <= 1) {
+        weatherTimer = moment().add(30, "minutes");
+        weatherUp();
+    }
+    if (eventTimer.diff(tmer, "minutes") <= 1 && config.events === "on") {
+        eventTimer = moment().add(4, "days");
+        eventUp();
+    }
 }, 6000);
 
 function weatherUp() {
-  let rand = weathers[Math.floor(Math.random() * weathers.length)];
-  weatherupdater.setWeather(rand);
-  forecast.send(ewthr.weathernn());
+    let rand = weathers[Math.floor(Math.random() * weathers.length)];
+    weatherupdater.setWeather(rand);
+    forecast.send(ewthr.weather());
 }
 
 function eventUp() {
-  let rand = events[Math.floor(Math.random() * events.length)];
-  eventUpdater.setEvent(rand);
-  forecast.send(eevnt.event());
+    let rand = events[Math.floor(Math.random() * events.length)];
+    eventUpdater.setEvent(rand);
+    forecast.send(eevnt.event());
 }
+        

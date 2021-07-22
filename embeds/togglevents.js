@@ -7,22 +7,22 @@ module.exports = {
             let emb = new discord.MessageEmbed()
                 .setAuthor("WeatherBot", icon_url = "https://i.imgur.com/38ayDN2.jpg")
                 .setColor("#39b01c")
-                .setTitle("Events had been turned on!")
+                .setTitle("Events have been turned on!")
             return emb
     },
     off: function() {
             let emb = new discord.MessageEmbed()
                 .setAuthor("WeatherBot", icon_url = "https://i.imgur.com/38ayDN2.jpg")
                 .setColor("#c0150c")
-                .setTitle("Events had been turned off!")
+                .setTitle("Events have been turned off!")
             return emb
     },
     help: function() {
             let emb = new discord.MessageEmbed()
             .setColor("#7CFC00")
-            .setTitle("Weather Altering Spell")
+            .setTitle("Toggle Events")
             .setDescription("Choose an option:")
-            .addField("on, off", `Usage: ${config.prefix}togglevents <on/off>`, false)
+            .addField("on, off", `Usage: ${config.prefix}togglevents`, false)
             return emb
         }
 }
