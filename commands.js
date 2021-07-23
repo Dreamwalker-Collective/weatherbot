@@ -1,12 +1,18 @@
 const config = require("./config/config.json");
-const eeror = require("./embeds/error");
-const etogg = require("./embeds/togglevents");
-const esucc = require("./embeds/success");
+
+//embeds
+const embeds = {
+    util: require('./embeds/utility'),
+    weather: require("./embeds/weather"),
+    event: require("./embeds/event"),
+    alterWeather: require("./embeds/alter"),
+    toggleEvents: require("./embeds/togglevents"),
+};
 
 const fs = require("fs");
 
 module.exports = {
-    setPrefix: (message) => {
+    setPrefix: (message, bot) => {
         let newPrefix = message.content.split(" ").slice(1, 2)[0];
 
         if (newPrefix) {
@@ -19,9 +25,9 @@ module.exports = {
             message.guild
                 .member(bot.user)
                 .setNickname(`[${config.prefix}]${bot.user.username}`);
-            return message.channel.send(esucc.success());
+            return message.channel.send(embeds.util.success());
         } else {
-            return message.channel.send(eeror.error());
+            return message.channel.send(embeds.util.error());
         }
     },
 
@@ -34,10 +40,10 @@ module.exports = {
         );
 
         if (config.events) {
-            return message.channel.send(etogg.on());
+            return message.channel.send(embeds.toggleEvents.on());
         }
 
-        return message.channel.send(etogg.off());
+        return message.channel.send(embeds.toggleEvents.off());
     },
 
     alterWeather: (message) => {
@@ -53,18 +59,18 @@ module.exports = {
                 );
                 forecast.send(ewthr.weather());
                 const author = message.author.username;
-                message.channel.send(ealtr.alter(author));
+                return message.channel.send(embeds.alterWeather.alter(author));
             } else if (wArg === undefined) {
-                message.channel.send(ealtr.help());
+                return message.channel.send(embeds.alterWeather.help());
             } else {
-                message.channel.send(
+                return message.channel.send(
                     "`Invalid weather condition. Type " +
                         config.prefix +
                         "weatheralter for more info.`"
                 );
             }
         } else {
-            message.channel.send("`Yah Yeet No can do`");
+            return message.channel.send("`Yah Yeet No can do`");
         }
     },
 };

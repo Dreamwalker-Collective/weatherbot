@@ -9,12 +9,11 @@ const weatherupdater = require("./weatherupdater.js");
 const eventUpdater = require("./eventUpdater.js");
 
 //embeds
-const ehelp = require("./embeds/help");
-const ewthr = require("./embeds/weather");
-const eevnt = require("./embeds/event");
-const estrt = require("./embeds/start");
-const eeror = require("./embeds/error");
-const ealtr = require("./embeds/alter");
+const embeds = {
+    util: require("./embeds/utility"),
+    weather: require("./embeds/weather"),
+    event: require("./embeds/event"),
+};
 
 // commands
 const commands = require("./commands");
@@ -40,7 +39,7 @@ bot.on("ready", () => {
         );
         bot.destroy(bot);
     } else {
-        return forecast.send(estrt.start());
+        return forecast.send(embeds.util.start());
     }
 });
 
@@ -50,29 +49,25 @@ bot.on("message", (message) => {
 
     if (message.content.toLowerCase() === `${config.prefix}start`) {
         if (!message.member.hasPermission("ADMINISTRATOR"))
-            return message.channel.send(eeror);
+            return message.channel.send(embeds.util.error());
         else {
             weatherUp();
             eventUp();
             message.delete();
         }
     }
-});
 
-//help command
-bot.on("message", (message) => {
-    if (message.author.bot || message.channel.type === "dm") return;
-
-    if (message.content.toLowerCase() === config.prefix + "help") {
-        return message.channel.send(ehelp.help());
+    //help command
+    else if (message.content.toLowerCase() === config.prefix + "help") {
+        return message.channel.send(embeds.util.help());
     }
 
     //set the prefix
     else if (message.content.startsWith(config.prefix + "setpref")) {
         if (!message.member.hasPermission("ADMINISTRATOR")) {
-            return message.channel.send(eeror.error());
+            return message.channel.send(embeds.error.error());
         } else {
-            return commands.setPrefix(message);
+            return commands.setPrefix(message, bot);
         }
     }
 
@@ -89,12 +84,12 @@ bot.on("message", (message) => {
 
     //what's the weather
     else if (message.content.toLowerCase() === config.prefix + "weather") {
-        return message.channel.send(ewthr.weather());
+        return message.channel.send(embeds.weather.weather());
     }
 
     //whats the event
     else if (message.content.toLowerCase() === config.prefix + "event") {
-        return message.channel.send(eevnt.event());
+        return message.channel.send(embeds.event.event());
     }
 
     // WeatherAlter magic
@@ -149,12 +144,12 @@ setInterval(() => {
 function weatherUp() {
     let rand = weathers[Math.floor(Math.random() * weathers.length)];
     weatherupdater.setWeather(rand);
-    forecast.send(ewthr.weather());
+    forecast.send(embeds.weather.weather());
 }
 
 function eventUp() {
     let rand = events[Math.floor(Math.random() * events.length)];
     eventUpdater.setEvent(rand);
-    forecast.send(eevnt.event());
+    forecast.send(embeds.event.event());
 }
         

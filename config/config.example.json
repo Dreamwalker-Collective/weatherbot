@@ -3,5 +3,7 @@
     "channel": "weather-forecast",
     "prefix": "/",
     "lunarCycle": 28,
-    "events": true
+    "events": true,
+    "weatherInterval": 10,
+    "eventInterval": 1
 }
