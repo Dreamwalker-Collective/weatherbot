@@ -39,7 +39,7 @@ bot.on("ready", () => {
         );
         bot.destroy(bot);
     } else {
-        return forecast.send(embeds.util.start());
+        return forecast.send(embeds.util.start(config));
     }
 });
 
