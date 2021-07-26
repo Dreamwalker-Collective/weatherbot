@@ -61,7 +61,7 @@ bot.on("message", (message) => {
 
     //help command
     else if (message.content.toLowerCase() === config.prefix + "help") {
-        return message.channel.send(embeds.util.help());
+        return message.channel.send(embeds.util.help(config));
     }
 
     //set the prefix

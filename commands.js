@@ -2,11 +2,9 @@ const config = require("./config/config.json");
 
 //embeds
 const embeds = {
-    util: require('./embeds/utility'),
+    util: require("./embeds/utility"),
     weather: require("./embeds/weather"),
     event: require("./embeds/event"),
-    alterWeather: require("./embeds/alter"),
-    toggleEvents: require("./embeds/togglevents"),
 };
 
 const fs = require("fs");
@@ -42,10 +40,10 @@ module.exports = {
         );
 
         if (config.events) {
-            return message.channel.send(embeds.toggleEvents.on());
+            return message.channel.send(embeds.events.on());
         }
 
-        return message.channel.send(embeds.toggleEvents.off());
+        return message.channel.send(embeds.events.off());
     },
 
     alterWeather: (message) => {
@@ -61,9 +59,9 @@ module.exports = {
                 );
                 forecast.send(ewthr.weather());
                 const author = message.author.username;
-                return message.channel.send(embeds.alterWeather.alter(author));
+                return message.channel.send(embeds.weather.alter(author));
             } else if (wArg === undefined) {
-                return message.channel.send(embeds.alterWeather.help());
+                return message.channel.send(embeds.weather.alterHelp());
             } else {
                 return message.channel.send(
                     "`Invalid weather condition. Type " +
