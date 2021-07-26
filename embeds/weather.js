@@ -2,8 +2,8 @@ const discord = require('discord.js');
 const wtthr = require("../weather.json");
 
 module.exports = {
-    weather: function () {
-        let emb = new discord.MessageEmbed()
+    weather: () => {
+        return new discord.MessageEmbed()
             .setAuthor("Weather", (icon_url = `${wtthr.icon}`))
             .setColor(wtthr.C)
             .addField(
@@ -11,19 +11,17 @@ module.exports = {
                 "***      ***" + "  " + wtthr.D,
                 false
             );
-        return emb;
     },
-    alter: function alter(author) {
-        let emb = new discord.MessageEmbed()
+    alter: (author) => {
+        return new discord.MessageEmbed()
             .setColor(weather.C)
             .setTitle(author + " has used weather magic!")
             .setDescription(
                 "*It is now " + weatherData.weather.toLowerCase() + "*"
             );
-        return emb;
     },
-    alterHelp: function halp() {
-        let emb = new discord.MessageEmbed()
+    alterHelp: () => {
+        return new discord.MessageEmbed()
             .setColor("#7CFC00")
             .setTitle("Weather Altering Spell")
             .setDescription("Choose an option to change weather:")
@@ -36,6 +34,5 @@ module.exports = {
                     "weatheralter <weather>",
                 false
             );
-        return emb;
     },
 };

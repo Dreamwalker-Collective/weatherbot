@@ -1,8 +1,8 @@
 const discord = require("discord.js");
 
 module.exports = {
-    start: function start(config) {
-        let emb = new discord.MessageEmbed()
+    start: (config) => {
+        return new discord.MessageEmbed()
             .setAuthor(
                 "WeatherBot",
                 (icon_url = "https://i.imgur.com/38ayDN2.jpg")
@@ -10,11 +10,10 @@ module.exports = {
             .setColor("#ff0040")
             .setTitle("Started successfully!")
             .setDescription(`Having trouble? Try ${config.prefix}help`);
-        return emb;
     },
 
-    error: function error(desc = "Something went wrong!") {
-        let emb = new discord.MessageEmbed()
+    error: (desc = "Something went wrong!") => {
+        return new discord.MessageEmbed()
             .setAuthor(
                 "WeatherBot",
                 (icon_url = "https://i.imgur.com/38ayDN2.jpg")
@@ -22,18 +21,16 @@ module.exports = {
             .setColor("#ff0a16")
             .setTitle(":x: ***Error!***")
             .setDescription(`*${desc}*`);
-        return emb;
     },
 
-    success: function success() {
-        let emb = new discord.MessageEmbed()
+    success: () => {
+        return new discord.MessageEmbed()
             .setColor("#2c9601")
             .addField("Success!", "The command has been run");
-        return emb;
     },
 
-    help: function help(config) {
-        let emb = new discord.MessageEmbed()
+    help: (config) => {
+        return new discord.MessageEmbed()
             .setAuthor(
                 "WeatherBot",
                 (icon_url = "https://i.imgur.com/38ayDN2.jpg")
@@ -44,6 +41,5 @@ module.exports = {
             .addField("Settings", "`setpref`, `togglevents`", false)
             .addField("Weather", "`weather`, `event`", false)
             .setFooter(`The current prefix is ${config.prefix}`);
-        return emb;
     },
 };

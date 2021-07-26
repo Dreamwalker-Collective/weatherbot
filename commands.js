@@ -4,7 +4,7 @@ const config = require("./config/config.json");
 const embeds = {
     util: require("./embeds/utility"),
     weather: require("./embeds/weather"),
-    event: require("./embeds/event"),
+    events: require("./embeds/event"),
 };
 
 const fs = require("fs");
