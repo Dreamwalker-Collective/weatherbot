@@ -70,7 +70,9 @@ module.exports = {
                 );
             }
         } else {
-            return message.channel.send("`Yah Yeet No can do`");
+            return message.channel.send(
+                embeds.error.error("You do not have permission to do that!")
+            );
         }
     },
 };

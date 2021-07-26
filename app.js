@@ -67,7 +67,9 @@ bot.on("message", (message) => {
     //set the prefix
     else if (message.content.startsWith(config.prefix + "setpref")) {
         if (!message.member.hasPermission("ADMINISTRATOR")) {
-            return message.channel.send(embeds.error.error());
+            return message.channel.send(
+                embeds.error.error("You do not have permission to do that!")
+            );
         } else {
             return commands.setPrefix(message, bot);
         }
@@ -78,7 +80,9 @@ bot.on("message", (message) => {
         if (message.member.hasPermission("ADMINISTRATOR")) {
             return commands.toggleEvents(message);
         } else {
-            return message.channel.send("`yah yeet no can do`");
+            return message.channel.send(
+                embeds.error.error("You do not have permission to do that!")
+            );
         }
     }
 
