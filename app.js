@@ -12,7 +12,7 @@ const eventUpdater = require("./eventUpdater.js");
 const embeds = {
     util: require("./embeds/utility"),
     weather: require("./embeds/weather"),
-    event: require("./embeds/event"),
+    events: require("./embeds/event"),
 };
 
 // commands
@@ -95,7 +95,7 @@ bot.on("message", (message) => {
 
     //whats the event
     else if (message.content.toLowerCase() === config.prefix + "event") {
-        return message.channel.send(embeds.event.event());
+        return message.channel.send(embeds.events.event());
     }
 
     // WeatherAlter magic
@@ -156,6 +156,6 @@ function weatherUp() {
 function eventUp() {
     let rand = events[Math.floor(Math.random() * events.length)];
     eventUpdater.setEvent(rand);
-    forecast.send(embeds.event.event());
+    forecast.send(embeds.events.event());
 }
         
