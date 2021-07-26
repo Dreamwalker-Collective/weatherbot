@@ -27,7 +27,9 @@ module.exports = {
                 .setNickname(`[${config.prefix}]${bot.user.username}`);
             return message.channel.send(embeds.util.success());
         } else {
-            return message.channel.send(embeds.util.error());
+            return message.channel.send(
+                embeds.util.error("You must supply a prefix to use!")
+            );
         }
     },
 

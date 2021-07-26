@@ -49,7 +49,9 @@ bot.on("message", (message) => {
 
     if (message.content.toLowerCase() === `${config.prefix}start`) {
         if (!message.member.hasPermission("ADMINISTRATOR"))
-            return message.channel.send(embeds.util.error());
+            return message.channel.send(
+                embeds.util.error("You do not have permission to do that!")
+            );
         else {
             weatherUp();
             eventUp();

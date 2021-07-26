@@ -13,7 +13,7 @@ module.exports = {
         return emb;
     },
 
-    error: function error() {
+    error: function error(desc = "Something went wrong!") {
         let emb = new discord.MessageEmbed()
             .setAuthor(
                 "WeatherBot",
@@ -21,7 +21,7 @@ module.exports = {
             )
             .setColor("#ff0a16")
             .setTitle(":x: ***Error!***")
-            .setDescription("*You don't have permission to do this!*");
+            .setDescription(`*${desc}*`);
         return emb;
     },
 
