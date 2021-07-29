@@ -1,18 +1,22 @@
 const discord = require('discord.js');
-const wtthr = require("../weather.json");
+const data = require("./data/connection");
 
 module.exports = {
-    weather: () => {
+    weather: (guild) => {
+        let cache = data.guild.cache(guild);
+        let weather = cache.get("weather");
         return new discord.MessageEmbed()
-            .setAuthor("Weather", (icon_url = `${wtthr.icon}`))
-            .setColor(wtthr.C)
+            .setAuthor("Weather", (icon_url = `${weather.icon}`))
+            .setColor(weather.C)
             .addField(
-                wtthr.E1 + "  " + wtthr.N,
-                "***      ***" + "  " + wtthr.D,
+                weather.E1 + "  " + weather.N,
+                "***      ***" + "  " + weather.D,
                 false
             );
     },
-    alter: (author) => {
+    alter: (author, guild) => {
+        let cache = data.guild.cache(guild);
+        let weather = cache.get("weather");
         return new discord.MessageEmbed()
             .setColor(weather.C)
             .setTitle(author + " has used weather magic!")

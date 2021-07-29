@@ -46,7 +46,7 @@ module.exports = {
         return message.channel.send(embeds.events.off());
     },
 
-    alterWeather: (message) => {
+    alterWeather: (message, guild) => {
         if (message.member.roles.find((x) => x.name === "Weather Mage")) {
             let wArg = message.content.split(" ").slice(1, 2)[0];
             if (wArg && wArg in weatherupdater.weatherOptions()) {

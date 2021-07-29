@@ -76,3 +76,5 @@ config/config.json
 
 /events.json
 /weather.json
+
+*.sqlite
