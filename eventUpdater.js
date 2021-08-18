@@ -4,7 +4,7 @@ const data = require("./data/connection");
 module.exports = {
     eventOptions: () => Object.keys(eventStatus),
 
-    setEvent: (input, guild) => {
+    setEvent: async (input, guild) => {
         let wEvent = {};
         let entry = eventStatus[input];
         wEvent.N = entry.name;
@@ -13,7 +13,7 @@ module.exports = {
         wEvent.E2 = entry.emoji;
         wEvent.D = entry.comment;
 
-        let settings = data.guild.cache(guild);
-        settings.set("event", wEvent);
+        let settings = await data.guild.cache(guild);
+        return await settings.set("event", wEvent);
     },
 };

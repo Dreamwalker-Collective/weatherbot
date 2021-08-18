@@ -45,7 +45,7 @@ bot.on("ready", () => {
 });
 
 //in case shit goes wrong
-bot.on("message", (message) => {
+bot.on("message", async (message) => {
     if (message.author.bot || message.channel.type === "dm") return;
 
     const guild = message.guild.id;
@@ -80,7 +80,7 @@ bot.on("message", (message) => {
     // togglevents
     else if (message.content.startsWith(`${config.prefix}toggle`)) {
         if (message.member.hasPermission("ADMINISTRATOR")) {
-            return commands.toggleEvents(message);
+            return await commands.toggleEvents(message, bot, guild);
         } else {
             return message.channel.send(
                 embeds.error.error("You do not have permission to do that!")
@@ -92,12 +92,12 @@ bot.on("message", (message) => {
 
     //what's the weather
     else if (message.content.toLowerCase() === config.prefix + "weather") {
-        return message.channel.send(embeds.weather.weather(guild));
+        return message.channel.send(await embeds.weather.weather(guild));
     }
 
     //whats the event
     else if (message.content.toLowerCase() === config.prefix + "event") {
-        return message.channel.send(embeds.events.event(guild));
+        return message.channel.send(await embeds.events.event(guild));
     }
 
     // WeatherAlter magic
@@ -151,15 +151,15 @@ eventTimer = moment().add(4, "days");
 //     }
 // }, 6000);
 
-function weatherUp(guild) {
+async function weatherUp(guild) {
     let rand = weathers[Math.floor(Math.random() * weathers.length)];
-    weatherupdater.setWeather(rand, guild);
-    forecast.send(embeds.weather.weather());
+    await weatherupdater.setWeather(rand, guild);
+    forecast.send(await embeds.weather.weather(guild));
 }
 
-function eventUp() {
+async function eventUp(guild) {
     let rand = events[Math.floor(Math.random() * events.length)];
-    eventUpdater.setEvent(rand, guild);
-    forecast.send(embeds.events.event());
+    await eventUpdater.setEvent(rand, guild);
+    forecast.send(await embeds.events.event(guild));
 }
         

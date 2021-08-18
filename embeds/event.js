@@ -1,11 +1,20 @@
 const discord = require('discord.js');
-const event = require("../events.json");
+const data = require("../data/connection");
 const config = require("../config/config.json");
+const eventUpdater = require("../eventUpdater");
 
 module.exports = {
-    event: () => {
+    event: async (guild) => {
+        let cache = await data.guild.cache(guild);
+        let event = await cache.get("event");
+
+        if (!event) {
+            await eventUpdater.setEvent("fullMoon", guild);
+            event = await cache.get("event");
+        }
+
         return new discord.MessageEmbed()
-            .setAuthor("Event", (icon_url = `${event.icon}`))
+            .setAuthor("Event", event.icon)
             .setColor(event.C)
             .setDescription("What was the last event?")
             .addField(

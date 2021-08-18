@@ -1,12 +1,21 @@
 const discord = require('discord.js');
-const data = require("./data/connection");
+const data = require("../data/connection");
+const weatherUpdater = require("../weatherupdater");
 
 module.exports = {
-    weather: (guild) => {
-        let cache = data.guild.cache(guild);
-        let weather = cache.get("weather");
+    weather: async (guild) => {
+        let cache = await data.guild.cache(guild);
+
+        let weather = await cache.get("weather");
+
+        // Just until I work out a better bootstrap
+        if (!weather) {
+            await weatherUpdater.setWeather("sunny", guild);
+            weather = await cache.get("weather");
+        }
+
         return new discord.MessageEmbed()
-            .setAuthor("Weather", (icon_url = `${weather.icon}`))
+            .setAuthor("Weather", weather.icon)
             .setColor(weather.C)
             .addField(
                 weather.E1 + "  " + weather.N,

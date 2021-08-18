@@ -1,4 +1,4 @@
-const config = require("./config/config.json");
+const data = require("./data/connection");
 
 //embeds
 const embeds = {
@@ -7,10 +7,8 @@ const embeds = {
     events: require("./embeds/event"),
 };
 
-const fs = require("fs");
-
 module.exports = {
-    setPrefix: (message, bot) => {
+    setPrefix: (message, bot, guild) => {
         let newPrefix = message.content.split(" ").slice(1, 2)[0];
 
         if (newPrefix) {

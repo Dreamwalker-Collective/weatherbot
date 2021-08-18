@@ -4,7 +4,7 @@ const data = require("./data/connection");
 module.exports = {
     weatherOptions: () => Object.keys(weatherStatus),
 
-    setWeather: (input, guild) => {
+    setWeather: async (input, guild) => {
         let wthr = {};
         let entry = weatherStatus[input];
         wthr.N = entry.name;
@@ -13,9 +13,9 @@ module.exports = {
         wthr.E1 = entry.emoji;
         wthr.D = entry.comment;
 
-        console.log(wthr);
+        // console.log(wthr);
 
-        let settings = data.guild.cache(guild);
-        settings.set("weather", wthr);
+        let cache = await data.guild.cache(guild);
+        return await cache.set("weather", wthr);
     },
 };
