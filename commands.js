@@ -11,6 +11,8 @@ module.exports = {
     setPrefix: (message, bot, guild) => {
         let newPrefix = message.content.split(" ").slice(1, 2)[0];
 
+        let config = data.guild.settings(guild);
+
         if (newPrefix) {
             config.prefix = newPrefix;
             fs.writeFile(
