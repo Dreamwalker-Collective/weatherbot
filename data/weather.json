@@ -42,8 +42,15 @@
 "sunny": {
     "name": "Sunny",
     "color": "#f7ca02",
-    "emoji": ":partly_sunny: ",
+    "emoji": ":sunny: ",
     "image": "https://i.imgur.com/vd2ZG3g.png",
     "comment": "Praise the sun!"
+},
+"partlySunny": {
+    "name": "Partly Sunny",
+    "color": "#f7ca02",
+    "emoji": ":partly_sunny:",
+    "image": "https://i.imgur.com/vd2ZG3g.png",
+    "comment": ""
 }
 }

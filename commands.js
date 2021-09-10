@@ -1,17 +1,17 @@
-const config = require("./config/config.json");
+const data = require("./data/connection");
 
 //embeds
 const embeds = {
     util: require("./embeds/utility"),
     weather: require("./embeds/weather"),
-    event: require("./embeds/event"),
+    events: require("./embeds/event"),
 };
 
-const fs = require("fs");
-
 module.exports = {
-    setPrefix: (message, bot) => {
+    setPrefix: (message, bot, guild) => {
         let newPrefix = message.content.split(" ").slice(1, 2)[0];
+
+        let config = data.guild.settings(guild);
 
         if (newPrefix) {
             config.prefix = newPrefix;
@@ -46,7 +46,7 @@ module.exports = {
         return message.channel.send(embeds.events.off());
     },
 
-    alterWeather: (message) => {
+    alterWeather: (message, guild) => {
         if (message.member.roles.find((x) => x.name === "Weather Mage")) {
             let wArg = message.content.split(" ").slice(1, 2)[0];
             if (wArg && wArg in weatherupdater.weatherOptions()) {

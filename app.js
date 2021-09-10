@@ -12,7 +12,7 @@ const eventUpdater = require("./eventUpdater.js");
 const embeds = {
     util: require("./embeds/utility"),
     weather: require("./embeds/weather"),
-    event: require("./embeds/event"),
+    events: require("./embeds/event"),
 };
 
 // commands
@@ -29,6 +29,7 @@ bot.login(config.token);
 //log on start
 bot.on("ready", () => {
     console.log(`${bot.user.username} is ready!`);
+
     bot.user.setActivity("the skies", { type: "WATCHING" });
 
     //find channels, start embed
@@ -44,8 +45,10 @@ bot.on("ready", () => {
 });
 
 //in case shit goes wrong
-bot.on("message", (message) => {
+bot.on("message", async (message) => {
     if (message.author.bot || message.channel.type === "dm") return;
+
+    const guild = message.guild.id;
 
     if (message.content.toLowerCase() === `${config.prefix}start`) {
         if (!message.member.hasPermission("ADMINISTRATOR"))
@@ -53,9 +56,8 @@ bot.on("message", (message) => {
                 embeds.util.error("You do not have permission to do that!")
             );
         else {
-            weatherUp();
-            eventUp();
-            message.delete();
+            weatherUp(guild);
+            eventUp(guild);
         }
     }
 
@@ -78,7 +80,7 @@ bot.on("message", (message) => {
     // togglevents
     else if (message.content.startsWith(`${config.prefix}toggle`)) {
         if (message.member.hasPermission("ADMINISTRATOR")) {
-            return commands.toggleEvents(message);
+            return await commands.toggleEvents(message, bot, guild);
         } else {
             return message.channel.send(
                 embeds.error.error("You do not have permission to do that!")
@@ -90,18 +92,20 @@ bot.on("message", (message) => {
 
     //what's the weather
     else if (message.content.toLowerCase() === config.prefix + "weather") {
-        return message.channel.send(embeds.weather.weather());
+        return message.channel.send(await embeds.weather.weather(guild));
     }
 
     //whats the event
     else if (message.content.toLowerCase() === config.prefix + "event") {
-        return message.channel.send(embeds.event.event());
+        return message.channel.send(await embeds.events.event(guild));
     }
 
     // WeatherAlter magic
     else if (message.content.startsWith(config.prefix + "weatheralter")) {
-        return commands.alterWeather(message);
+        return commands.alterWeather(message, guild);
     }
+
+    message.delete();
 });
 
 //timeline
@@ -135,27 +139,27 @@ const events = [
 weatherTimer = moment().add(30, "minutes");
 eventTimer = moment().add(4, "days");
 
-setInterval(() => {
-    var tmer = moment();
-    if (weatherTimer.diff(tmer, "minutes") <= 1) {
-        weatherTimer = moment().add(30, "minutes");
-        weatherUp();
-    }
-    if (eventTimer.diff(tmer, "minutes") <= 1 && config.events === "on") {
-        eventTimer = moment().add(4, "days");
-        eventUp();
-    }
-}, 6000);
+// setInterval(() => {
+//     var tmer = moment();
+//     if (weatherTimer.diff(tmer, "minutes") <= 1) {
+//         weatherTimer = moment().add(30, "minutes");
+//         weatherUp();
+//     }
+//     if (eventTimer.diff(tmer, "minutes") <= 1 && config.events === "on") {
+//         eventTimer = moment().add(4, "days");
+//         eventUp();
+//     }
+// }, 6000);
 
-function weatherUp() {
+async function weatherUp(guild) {
     let rand = weathers[Math.floor(Math.random() * weathers.length)];
-    weatherupdater.setWeather(rand);
-    forecast.send(embeds.weather.weather());
+    await weatherupdater.setWeather(rand, guild);
+    forecast.send(await embeds.weather.weather(guild));
 }
 
-function eventUp() {
+async function eventUp(guild) {
     let rand = events[Math.floor(Math.random() * events.length)];
-    eventUpdater.setEvent(rand);
-    forecast.send(embeds.event.event());
+    await eventUpdater.setEvent(rand, guild);
+    forecast.send(await embeds.events.event(guild));
 }
         
